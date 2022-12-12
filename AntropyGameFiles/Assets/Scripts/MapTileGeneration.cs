@@ -5,6 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshCollider))]
 
 public class MapTileGeneration : MonoBehaviour
 {
@@ -42,7 +43,13 @@ public class MapTileGeneration : MonoBehaviour
 
         CreateShape();
         UpdateMesh();
+        UpdateCollider();
 
+    }
+
+    void UpdateCollider()
+    {
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     //void Update()
@@ -115,12 +122,14 @@ public class MapTileGeneration : MonoBehaviour
                         else if (tyleType == TyleType.stones)
                         { decorationRotation = UnityEngine.Random.rotation; }
 
-
-                        foliage = Instantiate(decorationPrefab, new Vector3((float)(x + UnityEngine.Random.value * 0.2f) / resolution + originX, y, (float)(z + UnityEngine.Random.value * 0.2f) / resolution + originZ), decorationRotation, gameObject.transform);
-                        foliage.transform.localScale = new Vector3((1f + UnityEngine.Random.value * 0.2f) * size, (1f + UnityEngine.Random.value * 0.2f) * size, (1f + UnityEngine.Random.value * 0.2f) * size);
-
+                        if(decorationPrefab != null)
+                        {
+                          foliage = Instantiate(decorationPrefab, new Vector3((float)(x + UnityEngine.Random.value * 0.2f) / resolution + originX, y, (float)(z + UnityEngine.Random.value * 0.2f) / resolution + originZ), decorationRotation, gameObject.transform);
+                          foliage.transform.localScale = new Vector3((1f + UnityEngine.Random.value * 0.2f) * size, (1f + UnityEngine.Random.value * 0.2f) * size, (1f + UnityEngine.Random.value * 0.2f) * size);
+                        }   
                     }
                 }
+
                 if (minTerrainHeight > y) { minTerrainHeight = y; }
                 if (maxTerrainHeight < y) { maxTerrainHeight = y; }
 
@@ -130,9 +139,11 @@ public class MapTileGeneration : MonoBehaviour
             }
         }
 
-        //add water
-        if (tyleType == TyleType.water) { Instantiate(decorationPrefab, new Vector3(originX, transform.position.y - 0.08f, originZ), Quaternion.identity, gameObject.transform); }
-
+    //add water
+    if (decorationPrefab != null)
+    {
+      if (tyleType == TyleType.water) { Instantiate(decorationPrefab, new Vector3(originX, transform.position.y - 0.08f, originZ), Quaternion.identity, gameObject.transform); }
+    }
         Gradient gradient = colorGradient;
 
         //color the vertices

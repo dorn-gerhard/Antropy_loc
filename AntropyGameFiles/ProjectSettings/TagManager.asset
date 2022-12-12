@@ -6,11 +6,12 @@ TagManager:
   tags:
   - RoomsL1
   - TunnelsL1
+  - Ant
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Map
   - Water
   - UI
   - 

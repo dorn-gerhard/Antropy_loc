@@ -479,6 +479,7 @@ MonoBehaviour:
   confirmButton: {fileID: 2127685532}
   freeAnts: {fileID: 711800973}
   assignedAntsText: {fileID: 2005526244}
+  antPrefab: {fileID: 8048422513367718086, guid: fa07b5ca66fd58549968d36cf1e76757, type: 3}
 --- !u!114 &731549461
 MonoBehaviour:
   m_ObjectHideFlags: 0
