@@ -25,17 +25,12 @@ public class TileScript : MonoBehaviour
   /// <summary>
   /// Ants on tile
   /// </summary>
-  int assignedAnts;
+  public int assignedAnts;
 
   /// <summary>
   /// Max Counter of assigned ants on tile
   /// </summary>
-  int maxAssignedAnts;
-
-  /// <summary>
-  /// Free Ants Global
-  /// </summary>
-  int freeAnts;
+  public int maxAssignedAnts = 10;
 
   /// <summary>
   /// Resources on the tile
@@ -64,25 +59,24 @@ public class TileScript : MonoBehaviour
 
   bool isAnthill = false;
 
-  GameManager gameManagerInstance;
+  //GameManager gameManagerInstance;
 
   private void Awake()
   {
-    gameManagerInstance = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    //gameManagerInstance = GameObject.Find("Game Manager").GetComponent<GameManager>();
   }
   private void Start()
   {
     if (isAnthill) 
     {
-      maxAssignedAnts = gameManagerInstance.maxAntsAnthillTile;
+      maxAssignedAnts = GameManager.Instance.maxAntsAnthillTile;
     }
     else 
     {
-      maxAssignedAnts = gameManagerInstance.maxAntsResourceTile;
+      maxAssignedAnts = GameManager.Instance.maxAntsResourceTile;
     }
     
     assignedAnts = 0;
-    freeAnts = 0;
   }
 
   /// <summary>
@@ -225,21 +219,6 @@ public class TileScript : MonoBehaviour
     set 
     {
       resourceAmount = value;
-    }
-  }
-
-  /// <summary>
-  /// Tile resources, getter and setter
-  /// </summary>
-  public int FreeAnts
-  {
-    get
-    {
-      return freeAnts;
-    }
-    set
-    {
-      freeAnts = value;
     }
   }
 

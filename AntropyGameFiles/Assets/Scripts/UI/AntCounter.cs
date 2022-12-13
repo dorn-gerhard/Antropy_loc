@@ -21,11 +21,11 @@ public class AntCounter : MonoBehaviour
     public TextMeshProUGUI freeAnts;
     public TextMeshProUGUI assignedAntsText;
     public GameObject antPrefab;
-    private GameManager gameManager;
+    //private GameManager gameManager;
 
   private void Awake()
   {
-    gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    //gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
   }
 
   // Start is called before the first frame update
@@ -46,11 +46,11 @@ public class AntCounter : MonoBehaviour
 
     void IncreaseAnts()
     {
-        int freeAnts = gameManager.freeAnts;
+        int freeAnts = GameManager.Instance.freeAnts;
         if (freeAnts > 0 && assignedAnts < maxAssignedAnts)
         {
             assignedAnts += 1;
-            gameManager.freeAnts -= 1;
+            GameManager.Instance.freeAnts -= 1;
             SetAssignedAnts_remote();
             UpdateAntText();
 
@@ -63,7 +63,7 @@ public class AntCounter : MonoBehaviour
         if (assignedAnts > 0)
         {
             assignedAnts -= 1;
-            gameManager.freeAnts += 1;
+            GameManager.Instance.freeAnts += 1;
             SetAssignedAnts_remote();
             UpdateAntText();
 
@@ -79,19 +79,20 @@ public class AntCounter : MonoBehaviour
     }
     public void SetAssignedAnts(int ix, int iz, int asAnts, int maxAnts, bool isHill)
     {
+        Debug.Log("ants_assigned: " + asAnts + ", maxAnts: " + maxAnts);
         // could be replaced by ix, iy to get values from matrix
         posX = ix;
         posZ = iz;
-        assignedAnts = asAnts;
-        maxAssignedAnts = maxAnts;
-        isAntHill = isHill;
+        assignedAnts = GameManager.Instance.assignedMapAnts[ix,iz];
+        maxAssignedAnts = GameManager.Instance.maxAssignedMapAnts[ix,iz];
+        isAntHill = GameManager.Instance.isAnthill[ix,iz];
     }
     public void SetAssignedAnts_remote(){
         if (isAntHill)
         {
-            gameManager.mapInstance.GameMap[posX,posZ].AssignedAnts = assignedAnts;
+            GameManager.Instance.assignedMapAnts[posX,posZ] = assignedAnts;
         } else{
-            gameManager.mapInstance.GameMap[posX,posZ].AssignedAnts = assignedAnts;
+            GameManager.Instance.assignedMapAnts[posX,posZ] = assignedAnts;
         }
         
     }
@@ -101,7 +102,7 @@ public class AntCounter : MonoBehaviour
         {
 
         } else 
-        {   freeAnts.text = "Free ants: " + gameManager.freeAnts + "/" + gameManager.totalAnts;
+        {   freeAnts.text = "Free ants: " + GameManager.Instance.freeAnts + "/" + GameManager.Instance.totalAnts;
         }
         if (assignedAnts == 1)
         {

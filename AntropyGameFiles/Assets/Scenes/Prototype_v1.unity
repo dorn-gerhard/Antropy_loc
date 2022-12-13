@@ -276,7 +276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &523568305
 Transform:
   m_ObjectHideFlags: 0
@@ -1218,8 +1218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40be6b474c8d89946904cb1f93c1ddaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 50
-  columns: 50
   tilePrefabs:
   - {fileID: 6490856156205094238, guid: cfc2af4279e27ef47850cbaffa7fde79, type: 3}
   - {fileID: 6490856156205094238, guid: 57c81b6233a39cb42ba92b407af19a75, type: 3}
@@ -1597,6 +1595,74 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 157758896282708787, guid: 6a2b2eeb51e65574b8fdbecddbd99d4a, type: 3}
   m_PrefabInstance: {fileID: 157758894753876283}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1784519463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1784519465}
+  - component: {fileID: 1784519464}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1784519464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784519463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3caf56688798ca4e8c7723f6ff157c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: 
+  totalAnts: 100
+  freeAnts: 100
+  rows: 10
+  columns: 10
+  assignedHillAnts: 
+  resources: 0
+  currentSeason: 0
+  currentWeather: 0
+  hatcheryLevel: 0
+  storageLevel: 0
+  hatcheryMaxLevel: 0
+  storageMaxLevel: 0
+  hatcheryCost: 
+  storageCost: 
+  maxAntsResourceTile: 10
+  maxAntsAnthillTile: 10
+  MaxTurnCount: 10
+  currentTurnCount: 0
+  grassWeight: 1.5
+  resourceWeight: 0.05
+  soilWeight: 0.3
+  mapInstance: {fileID: 0}
+  cameraInstance: {fileID: 0}
+--- !u!4 &1784519465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784519463}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 400.2439, y: 329.3656, z: 1.7623334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005526243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2150,7 +2216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3075075617391170101, guid: f1c633493d7de13428e8237db353197e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3075075617391170110, guid: f1c633493d7de13428e8237db353197e, type: 3}
       propertyPath: m_Pivot.x

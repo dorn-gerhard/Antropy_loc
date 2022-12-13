@@ -7,16 +7,6 @@ using UnityEngine;
 public class MapScript : MonoBehaviour
 {
   /// <summary>
-  /// rows map
-  /// </summary>
-  public int rows;
-
-  /// <summary>
-  /// columns map
-  /// </summary>
-  public int columns;
-
-  /// <summary>
   /// Matrix of the Map
   /// </summary>
   TileScript[,] mapMatrix;
@@ -39,15 +29,14 @@ public class MapScript : MonoBehaviour
   /// <summary>
   /// Game Manager Scene Instance
   /// </summary>
-  GameManager gameManagerInstance;
+  //GameManager gameManagerInstance;
   
 
-  private void Awake()
+  private void Start()
   {
-    gameManagerInstance = GameObject.Find("Game Manager").GetComponent<GameManager>();
-    rows = gameManagerInstance.rows;
-    columns = gameManagerInstance.columns;
-    mapMatrix = new TileScript[gameManagerInstance.rows, gameManagerInstance.columns];
+    //gameManagerInstance = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    mapMatrix = new TileScript[GameManager.Instance.rows, GameManager.Instance.columns];
+    SpawnRandomMap();
   }
 
   /// <summary>
@@ -55,25 +44,26 @@ public class MapScript : MonoBehaviour
   /// </summary>
   public void SpawnRandomMap()
   {
-    for (int i = 0; i < rows; i++)
+    for (int i = 0; i < GameManager.Instance.rows; i++)
     {
       int distance_anthill = 0;
-      for (int j = 0; j < columns; j++)
+      for (int j = 0; j < GameManager.Instance.columns; j++)
       {
+        Debug.Log("index: " + i + " " + j);
         if(i == 0 && j == 0) 
         {
           CreateAnthillTile(i, j);
         }
         else 
         {
-          WeightResourceTile(i, j, distance_anthill, rows + columns);
+          WeightResourceTile(i, j, distance_anthill, GameManager.Instance.rows + GameManager.Instance.columns);
           //RandomResourceTile(i, j, distance_anthill);
           distance_anthill++;
         }
       }
     }
     GameObject.Find("AssignAnts").GetComponent<Canvas>().enabled = false;
-    GameObject.Find("Anthill").GetComponent<Canvas>().enabled = false;
+    //GameObject.Find("Anthill").GetComponent<Canvas>().enabled = false;
   }
 
   /// <summary>
@@ -82,15 +72,15 @@ public class MapScript : MonoBehaviour
   public void SpawnTerrainMap()
   {
     int[,] adder = new int[,] {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
-    for (int i = 0; i < rows; i++)
+    for (int i = 0; i < GameManager.Instance.rows; i++)
     {
-      for (int j = 0; j < columns; j++)
+      for (int j = 0; j < GameManager.Instance.columns; j++)
       {
         
         int sameFound = 0;
         for (int k = 0; k < adder.Length/2; k++)
         {
-          if (i + adder[k, 0] < rows && i + adder[k, 0] >= 0 && j + adder[k, 1] < columns && j + adder[k, 1] >= 0)
+          if (i + adder[k, 0] < GameManager.Instance.rows && i + adder[k, 0] >= 0 && j + adder[k, 1] < GameManager.Instance.columns && j + adder[k, 1] >= 0)
             if (mapMatrix[i, j].TileType == mapMatrix[i + adder[k, 0], j + adder[k, 1]].TileType)
             {
               sameFound = 1;
@@ -98,7 +88,7 @@ public class MapScript : MonoBehaviour
         }
         if(sameFound == 0 && (j != 0 || i != 0)) 
         { 
-          if(j + 1 > columns - 1) 
+          if(j + 1 > GameManager.Instance.columns - 1) 
           {
             ExchangeTilePrefab(mapMatrix[i, j], mapMatrix[i, j - 1].TileType);
           }
@@ -214,8 +204,8 @@ public class MapScript : MonoBehaviour
 
     //weights
     int basemax = 500;
-    int tileType = Random.Range(5, 9); //For normal map : int tileType = Random.Range(0, 4);
-    //int tileType = Random.Range(0, 4);
+    //int tileType = Random.Range(5, 9); //For normal map : int tileType = Random.Range(0, 4);
+    int tileType = Random.Range(0, 4);
     if (Random.Range(0, maxdist) > i+j + (maxdist) * GameManager.Instance.grassWeight)
     {
       tileType = 6;
@@ -364,7 +354,6 @@ public class MapScript : MonoBehaviour
 
     newTile.ResourceAmount = tile.ResourceAmount;
     
-    newTile.FreeAnts = tile.FreeAnts;
     newTile.AssignedAnts = tile.AssignedAnts;
     
     //old
